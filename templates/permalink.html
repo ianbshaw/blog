@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{{post.render() | safe}}
+  <br><br>
+	{% if user %}
+  		{% if post.user_id == user.key().id() %}
+  			<a class="edit-post" href="/blog/editpost/{{post.key().id()}}">Edit</a>
+  			<a class="delete-post" href="/blog/delpost/{{post.key().id()}}">Delete</a>
+  			<br><br>
+ 		{% endif %}
+
+
+ 		{% if post.user_id != user.key().id() %}
+      {% if user.key().id() not in post.likedBy %}
+  			<form action="/blog/likepost/{{post.key().id()}}" method="post">
+          <input type="submit" value="Like">
+        </form>
+
+  			<br><br>
+      {% endif %}
+ 		{% endif %}
+
+
+    {% if post.user_id != user.key().id() %}
+      {% if user.key().id() in post.likedBy %}
+        <form action="/blog/unlikepost/{{post.key().id()}}" method="post">
+          <input type="submit" value="Unlike">
+        </form>
+
+        <br><br>
+      {% endif %}
+    {% endif %}
+ 	{% endif %}
+ 	{% if post.likes == 1 %}
+            {{ post.likes }} person likes this post
+        {% else %}
+            {{ post.likes }} people like this post
+        {% endif %}
+  <br><br>
+  {% if user.name %}
+    <form action="/blog/newcomment/{{post.key().id()}}" method="get">
+      <input type="submit" value="New Comment">
+    </form>
+  {% endif %}
+  {% for c in comments %}
+    {% if c.comment_id == post.key().id() %}
+      <br><br>
+      {{ c.comment | safe }}
+      <br>
+      written by {{ c.commenter }} on {{ c.created.strftime("%a %b %d, %Y") }}
+      {% if c.commenter == user.name %}
+        <form action="/blog/editcomment/{{c.key().id()}}" method="get">
+          <input type="submit" value="Edit Comment">
+        </form>
+        <form action="/blog/deletecomment/{{c.key().id()}}" method="get">
+          <input type="submit" value="Delete Comment">
+        </form>
+      {% endif %}
+      <br>
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
