@@ -8,8 +8,15 @@ from string import letters
 
 import webapp2
 import jinja2
+import sys
+#sys.path.insert(1, 'C:\\Program Files (x86)\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine')
+#sys.path.insert(1, 'C:\\Program Files (x86)\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine\\lib\\yaml\\lib')
+#sys.path.remove('C:\\Python27\\lib\\site-packages\\google')
+import google
 
+gae_dir = google.__path__.append('C:\\Program Files (x86)\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine\\google')
 from google.appengine.ext import db
+
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
@@ -176,7 +183,7 @@ class BlogFront(BlogHandler):
     """ Main blog page displaying most recent 10 posts"""
     def get(self):
         post = db.GqlQuery("select * from Post order by created desc limit 10")
-        self.render('front.html', posts=post)
+        self.render('index.html', posts=post) 
 
 
 class PostPage(BlogHandler):

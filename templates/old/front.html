@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <a class="new-post" href="/blog/newpost">New Post</a>
+  {% for p in posts %}
+    {{ p.render() | safe }}
+    <br><br>
+  {% endfor %}
+
+<div class="error">
+{{error}}
+</div>
+
+{% endblock %}
