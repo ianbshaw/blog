@@ -189,6 +189,7 @@
                 <div class="col-12 col-lg-4">
                     <div class="single-blog-area clearfix mb-100">
                         <!-- Blog Content -->
+                        {% if c > 0 %}
                         <div class="single-blog-content">
                             <div class="line"></div>
                             <a href="#" class="post-tag">Lifestyle</a>
@@ -196,6 +197,7 @@
                             <p class="post-content">{{posts[0].content | safe}}</p>
                             <a href="/blog/{{posts[0].key().id()}}" class="btn original-btn">Read More</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -239,6 +241,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <!-- Blog Content -->
+                                {% if c > 1 %}
                                 <div class="single-blog-content">
                                     <div class="line"></div>
                                     <a href="#" class="post-tag">Lifestyle</a>
@@ -249,6 +252,7 @@
                                         <p>{{posts[1].created | safe}}</p>
                                     </div>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

@@ -183,7 +183,9 @@ class BlogFront(BlogHandler):
     """ Main blog page displaying most recent 10 posts"""
     def get(self):
         post = db.GqlQuery("select * from Post order by created desc limit 10")
-        self.render('index.html', posts=post) 
+        #c = db.GqlQuery("select count from Post")
+        c = post.count()
+        self.render('index.html', posts=post, c=int(c)) 
 
 
 class PostPage(BlogHandler):
