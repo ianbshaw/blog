@@ -9,12 +9,13 @@ from string import letters
 import webapp2
 import jinja2
 import sys
-#sys.path.insert(1, 'C:\\Program Files (x86)\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine')
-#sys.path.insert(1, 'C:\\Program Files (x86)\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine\\lib\\yaml\\lib')
+sys.path.insert(1, 'C:\\Users\\ian\\appdata\\local\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine')
+sys.path.insert(1, 'C:\\Users\\ian\\appdata\\local\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine\\lib\\yaml-3.10')
 #sys.path.remove('C:\\Python27\\lib\\site-packages\\google')
 import google
 
 gae_dir = google.__path__.append('C:\\Program Files (x86)\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine\\google')
+gae_dir = google.__path__.append('C:\\Users\\ian\\appdata\\local\\Google\\Cloud SDK\\google-cloud-sdk\\platform\\google_appengine\\google')
 from google.appengine.ext import db
 
 
@@ -121,6 +122,7 @@ class Post(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     last_modified = db.DateTimeProperty(auto_now=True)
     user_id = db.IntegerProperty(required=True)
+    image = db.StringProperty(required=True)
 
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
@@ -216,15 +218,16 @@ class NewPost(BlogHandler):
 
         subject = self.request.get('subject')
         content = self.request.get('content')
+        image = self.request.get('image')
 
-        if subject and content:
+        if subject and content and image:
             uid = self.user.key().id()
             p = Post(parent=blog_key(), subject=subject, content=content,
                      user_id=uid)
             p.put()
             self.redirect('/blog/%s' % str(p.key().id()))
         else:
-            error = "subject and content, please!"
+            error = "subject, image and content, please!"
             self.render("newpost.html", subject=subject, content=content,
                         error=error)
 
