@@ -122,7 +122,6 @@ class Post(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     last_modified = db.DateTimeProperty(auto_now=True)
     user_id = db.IntegerProperty(required=True)
-    image = db.StringProperty(required=True)
 
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
@@ -218,16 +217,15 @@ class NewPost(BlogHandler):
 
         subject = self.request.get('subject')
         content = self.request.get('content')
-        image = self.request.get('image')
 
-        if subject and content and image:
+        if subject and content:
             uid = self.user.key().id()
             p = Post(parent=blog_key(), subject=subject, content=content,
                      user_id=uid)
             p.put()
             self.redirect('/blog/%s' % str(p.key().id()))
         else:
-            error = "subject, image and content, please!"
+            error = "subject and content, please!"
             self.render("newpost.html", subject=subject, content=content,
                         error=error)
 

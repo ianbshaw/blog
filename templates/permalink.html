@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-	{{post.render() | safe}}
+	<div class="single-post">
+    {{post.render() | safe}}
+  </div>
   <br><br>
 	{% if user %}
   		{% if post.user_id == user.key().id() %}

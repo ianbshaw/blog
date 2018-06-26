@@ -32,6 +32,7 @@
   padding: 0; }
 
 body {
+  background-image: url("img/bg.jpg");
   font-family: "helveticaneuemedium";
   background-color: #ffffff; }
 
@@ -959,13 +960,25 @@ img {
     color: #ffffff; }
 
 .newpost-container {
-  margin-left: 200px; }
+  margin-left: 50px; }
+
+.new-post-subject {
+  min-width: 500px;
+}
+
+.new-post-content {
+  min-width: 500px;
+  min-height: 200px;
+}
 
 .post-content {
     width: 250px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
+
+.single-post {
+  max-width: 900px;}
 
 /* Contact Area CSS */
 .contact-form h5,
